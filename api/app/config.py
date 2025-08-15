@@ -5,9 +5,9 @@ from functools import lru_cache
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 class Settings(BaseSettings):
-    app_name: str
-    db_host: str
-    db_port: str
+    app_name: str = "FastNuxt"
+    db_host: str = "127.0.0.1"
+    db_port: str = "5432"
     db_name: str
     db_username: str
     db_password: str
