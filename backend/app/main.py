@@ -1,9 +1,8 @@
 from fastapi import FastAPI
-from . import config
 from functools import lru_cache
 from contextlib import asynccontextmanager
-from app.database import create_db_and_tables
-from .config import settings
+from app.core.database import create_db_and_tables
+from .core.config import settings
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -11,7 +10,7 @@ async def lifespan(app: FastAPI):
     yield
 
 app = FastAPI(
-    title=settings.app_name
+    title=settings.APP_NAME
 );
 
 @app.get("/")
