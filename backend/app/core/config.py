@@ -35,3 +35,5 @@ def get_settings():
     return Settings()
 
 settings = get_settings()
+
+print(settings.SQLALCHEMY_DATABASE_URI)
