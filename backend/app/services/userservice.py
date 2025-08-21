@@ -5,5 +5,5 @@ from app.models import User
 
 async def get_user_by_email(*, session: AsyncSession, email: str) -> Union[User, None]:
     statement = select(User).where(User.email == email)
-    result = await session.execute(statement=statement)
-    return result.scalar_one_or_none()
+    result = await session.scalars(statement=statement)
+    return result.first()

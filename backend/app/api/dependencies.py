@@ -11,7 +11,7 @@ from jwt.exceptions import InvalidTokenError
 from pydantic import ValidationError
 
 reusable_oauth2_scheme = OAuth2PasswordBearer(
-    tokenUrl=f"{settings.API_PATH}/login/access-token",
+    tokenUrl=f"{settings.API_PATH}/auth/login/access-token",
 )
 
 async def get_async_db() -> AsyncGenerator[AsyncSession, None, None]:
@@ -21,7 +21,7 @@ async def get_async_db() -> AsyncGenerator[AsyncSession, None, None]:
 SessionDependency = Annotated[AsyncSession, Depends(get_async_db)]
 TokenDependency = Annotated[str, Depends(reusable_oauth2_scheme)]
 
-def get_current_user(session: SessionDependency, token: TokenDependency) -> User:
+async def get_current_user(session: SessionDependency, token: TokenDependency) -> User:
     try:
         payload = jwt.decode(
             token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM]
@@ -32,7 +32,9 @@ def get_current_user(session: SessionDependency, token: TokenDependency) -> User
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Could not validate credentials",
         )
-    user = session.get(User, token_data.sub)
+    user = await session.get(User, token_data.sub)
+    print('--USER--')
+    print(user)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -47,7 +49,7 @@ def get_current_user(session: SessionDependency, token: TokenDependency) -> User
 
 CurrentUser = Annotated[User, Depends(get_current_user)]
 
-def get_current_active_superuser(current_user: CurrentUser) -> User:
+async def get_current_active_superuser(current_user: CurrentUser) -> User:
     if not current_user.is_superuser:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
