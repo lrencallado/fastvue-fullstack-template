@@ -3,3 +3,5 @@ sqlmodel
 asyncpg
 alembic
 greenlet
+pyjwt
+passlib[bcrypt]
