@@ -1,4 +1,4 @@
-# FastVue FullStack Template
+# FastVue FullStack Template (In Progress)
 
 A base project template combining FastAPI (backend) and Vue (frontend) for rapid development of modern web applications.
 
@@ -6,8 +6,8 @@ A base project template combining FastAPI (backend) and Vue (frontend) for rapid
 
 1.  Clone the repo and go to /api folder:
     ```bash
-    git clone https://github.com/yourusername/fastnuxt.git
-    cd fastnuxt/api
+    git clone https://github.com/lrencallado/fastvue-fullstack-template.git
+    cd fastvue-fullstack-template/backend
     ```
 
 2. Create and activate a virtual environment:
