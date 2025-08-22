@@ -12,7 +12,7 @@ from pydantic import  BeforeValidator, AnyUrl
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-def parse_cors(v: Any) -> Union[list[str], str]:
+def parse_cors(v: Any) -> list[str] | str:
     if isinstance(v, str) and not v.startswith("["):
         return [i.strip() for i in v.split(",")]
     elif isinstance(v, (list, str)):

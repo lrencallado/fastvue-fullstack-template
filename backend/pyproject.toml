@@ -1,0 +1,24 @@
+[project]
+name = "app"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Lloyd Encallado",email = "lloydencallado@gmail.com"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "alembic>=1.16.4",
+    "asyncpg>=0.30.0",
+    "fastapi[all]>=0.116.1",
+    "greenlet>=3.2.4",
+    "passlib[bcrypt]>=1.7.4",
+    "pyjwt>=2.10.1",
+    "sqlmodel>=0.0.24",
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
