@@ -3,7 +3,7 @@ from fastapi import Depends, HTTPException, status
 from app.core.config import settings
 from collections.abc import AsyncGenerator
 from sqlmodel.ext.asyncio.session import AsyncSession
-from app.core.database import async_session
+from app.core.database import async_session, get_db_session
 from typing import Annotated
 from app.models import User, TokenPayload
 import jwt
@@ -18,7 +18,7 @@ async def get_async_db() -> AsyncGenerator[AsyncSession, None, None]:
     async with async_session() as session:
         yield session
 
-SessionDependency = Annotated[AsyncSession, Depends(get_async_db)]
+SessionDependency = Annotated[AsyncSession, Depends(get_db_session)]
 TokenDependency = Annotated[str, Depends(reusable_oauth2_scheme)]
 
 async def get_current_user(session: SessionDependency, token: TokenDependency) -> User:

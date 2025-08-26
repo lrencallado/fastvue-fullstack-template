@@ -7,7 +7,7 @@ from app.services import authservice
 from datetime import timedelta
 from app.core import config, security
 
-router = APIRouter(tags=["authentication"], prefix="/auth")
+router = APIRouter(tags=["Authentication"], prefix="/auth")
 
 @router.post("/login/access-token")
 async def login_access_token(session: SessionDependency, form_data: Annotated[OAuth2PasswordRequestForm, Depends()]) -> Token:

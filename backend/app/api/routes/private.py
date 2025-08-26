@@ -6,7 +6,7 @@ from app.models import User, UserPublic
 from app.api.dependencies import SessionDependency
 from app.services.userservice import get_user_by_email
 
-router = APIRouter(tags=["private"], prefix="/private")
+router = APIRouter(tags=["Private"], prefix="/private")
 
 class PrivateUserCreate(BaseModel):
     email: str

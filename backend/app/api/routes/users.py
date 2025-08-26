@@ -4,7 +4,7 @@ from app.models import User, UserPublic, UsersPublic
 from typing import Any
 from sqlmodel import select, func
 
-router = APIRouter(prefix="/users", tags=["users"])
+router = APIRouter(prefix="/users", tags=["Users"])
 
 @router.get(
     "/",

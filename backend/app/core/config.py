@@ -1,6 +1,8 @@
 from pydantic import (
     PostgresDsn,
-    computed_field
+    computed_field,
+    BeforeValidator,
+    AnyUrl
 )
 from pydantic_core import MultiHostUrl
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -8,7 +10,6 @@ from pathlib import Path
 from functools import lru_cache
 import secrets
 from typing import Annotated, Any, Literal, Union
-from pydantic import  BeforeValidator, AnyUrl
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,8 +22,9 @@ def parse_cors(v: Any) -> list[str] | str:
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file = BASE_DIR / "../.env")
     APP_NAME: str = "FastVue FullStack Template"
-    APP_ENV: Literal["local", "staging", "production"] = "local"
-    DB_HOST: str = "127.0.0.1"
+    ENVIRONMENT: Literal["development", "staging", "production"] = "development"
+    DB_DEBUG: bool = False
+    DB_HOST: str = "localhost"
     DB_PORT: int = 5432
     DB_NAME: str
     DB_USERNAME: str
@@ -35,6 +37,10 @@ class Settings(BaseSettings):
     BACKEND_CORS_ORIGINS: Annotated[
         Union[list[AnyUrl], str], BeforeValidator(parse_cors)
     ] = []
+    # Database health and error handling
+    DATABASE_HEALTH_CHECK_ON_STARTUP: bool = True
+    DATABASE_CONNECTION_TIMEOUT: int = 30
+    DATABASE_POOL_PRE_PING: bool = True
 
     @computed_field  # type: ignore[prop-decorator]
     @property
